@@ -517,6 +517,12 @@ def _update_fatigue(state: MatchState) -> None:
         )
 
 
+SET_PIECE_NAMES = {
+    EventType.Corner: "Corner",
+    EventType.ThrowIn: "Throw in",
+}
+
+
 def _simulate_minute(state: MatchState) -> list[MatchEvent]:
     events = []
     minute = state.minute
@@ -704,10 +710,6 @@ def _simulate_minute(state: MatchState) -> list[MatchEvent]:
                     state.away_throw_ins += 1
                 else:
                     state.home_throw_ins += 1
-            SET_PIECE_NAMES = {
-                EventType.Corner: "Corner",
-                EventType.ThrowIn: "Throw in",
-            }
             events.append(
                 MatchEvent(
                     minute=minute,
