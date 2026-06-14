@@ -40,11 +40,11 @@ class Player:
 
     @property
     def overall(self) -> int:
-        return self.attributes.overall(self.role)
+        return self.attributes.overall(self.position)
 
     @property
     def potential(self) -> int:
-        return self.attributes.potential(self.role)
+        return self.attributes.potential(self.position)
 
     @classmethod
     def random(cls) -> "Player":
