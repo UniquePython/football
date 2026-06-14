@@ -31,11 +31,11 @@ class Mentality(BaseEnum):
 
 
 MENTALITY_RANGES: dict[Mentality, tuple[float, float]] = {
-    Mentality.VeryAttacking: (0.0, 10.9),
+    Mentality.VeryAttacking: (10.0, 10.9),
     Mentality.Attacking: (11.0, 11.9),
     Mentality.Balanced: (12.0, 12.9),
     Mentality.Defensive: (13.0, 13.9),
-    Mentality.VeryDefensive: (14.0, 20.0),
+    Mentality.VeryDefensive: (14.0, 15.0),
 }
 
 TEAM_NAME_SUFFIXES = [
@@ -80,17 +80,16 @@ class Team:
         squad: list[Player] = []
         outfield_positions = formation.positions
 
-        # --- Generate a pool per position: 3 players each ---
-        # then assign best as starter, second best as sub
+        # --- Starters ---
         gk_pool = sorted(
             [Player(self.country, None, None, Position.GK) for _ in range(3)],
             key=lambda p: p.overall,
             reverse=True,
         )
-        squad.append(gk_pool[0])  # starter
-        sub_gk = gk_pool[1]  # sub
+        squad.append(gk_pool[0])  # starter GK
+        sub_gk = gk_pool[1]  # sub GK
 
-        outfield_subs = []
+        outfield_sub_candidates = []
         for pos in outfield_positions:
             pool = sorted(
                 [Player(self.country, None, None, pos) for _ in range(3)],
@@ -98,12 +97,61 @@ class Team:
                 reverse=True,
             )
             squad.append(pool[0])  # starter
-            outfield_subs.append(pool[1])  # sub candidate
+            outfield_sub_candidates.append(pool[1])  # sub candidate
 
-        # --- Subs: pick 6 from sub candidates by overall ---
-        outfield_subs.sort(key=lambda p: p.overall, reverse=True)
+        # --- Subs: use _selectSubPositions for positional balance ---
+        sub_positions = self._selectSubPositions(outfield_positions)
+        # Match each required sub position to the best available candidate
+        used = set()
+        subs_ordered = []
+        for target_pos in sub_positions:
+            # Find best unused candidate matching this position
+            match = next(
+                (
+                    p
+                    for i, p in enumerate(
+                        sorted(
+                            outfield_sub_candidates,
+                            key=lambda p: p.overall,
+                            reverse=True,
+                        )
+                    )
+                    if i not in used and p.position == target_pos
+                ),
+                None,
+            )
+            if match:
+                used.add(outfield_sub_candidates.index(match))
+                subs_ordered.append(match)
+            else:
+                # Fallback: best unused candidate of same role
+                match = next(
+                    (
+                        p
+                        for p in sorted(
+                            outfield_sub_candidates,
+                            key=lambda p: p.overall,
+                            reverse=True,
+                        )
+                        if p not in subs_ordered and p.role == target_pos.role
+                    ),
+                    None,
+                )
+                if match:
+                    subs_ordered.append(match)
+
+        # Fill any remaining sub slots with best unused candidates
+        remaining = [
+            p
+            for p in sorted(
+                outfield_sub_candidates, key=lambda p: p.overall, reverse=True
+            )
+            if p not in subs_ordered
+        ]
+        subs_ordered.extend(remaining[: 6 - len(subs_ordered)])
+
         squad.append(sub_gk)
-        squad.extend(outfield_subs[:6])
+        squad.extend(subs_ordered[:6])
 
         # --- Reserves: 12, max 2 GKs ---
         gkCount = 0
