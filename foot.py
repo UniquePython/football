@@ -1,8 +1,8 @@
 import random
-from enum import Enum, auto
+from enum import StrEnum, auto
 
 
-class Foot(Enum):
+class Foot(StrEnum):
     Left = auto()
     Right = auto()
     Both = auto()
