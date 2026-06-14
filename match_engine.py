@@ -69,8 +69,8 @@ def _possession_probability(state: MatchState) -> float:
     away_mid = midfield_strength(state.away_active, state.away_fatigue)
 
     # formation modifier
-    home_form = state.home.formation.defensiveness * 0.5
-    away_form = state.away.formation.defensiveness * 0.5
+    home_form = state.home.formation.offensiveness * 0.5
+    away_form = state.away.formation.offensiveness * 0.5
 
     # game state modifier — losing team pushes forward
     if state.home_score < state.away_score:
