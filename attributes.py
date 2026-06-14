@@ -432,7 +432,7 @@ class KeepingAttributes:
     positioning: AttributeValue
 
 
-QUALITY_FLOOR = 40
+QUALITY_FLOOR = 20
 QUALITY_CEILING = 99
 
 

@@ -1,10 +1,10 @@
-# from player import Player
+from player import Player
 
-# if __name__ == "__main__":
-#     for i in range(5):
-#         player = Player.random()
-#         player.display()
-#         print("\n" + "─" * 40 + "\n")
+if __name__ == "__main__":
+    for i in range(5):
+        player = Player.random()
+        player.display()
+        print("\n" + "─" * 40 + "\n")
 
 # from formations import ALL_FORMATIONS
 
@@ -19,15 +19,15 @@
 #         team.display()
 #         print("\n" + "─" * 40 + "\n")
 
-from match_engine import simulate
-from match_report import print_report
-from team import Team
+# from match_engine import simulate
+# from match_report import print_report
+# from team import Team
 
-if __name__ == "__main__":
-    home = Team.random()
-    away = Team.random()
-    state = simulate(home, away)
-    print_report(state)
+# if __name__ == "__main__":
+#     home = Team.random()
+#     away = Team.random()
+#     state = simulate(home, away)
+#     print_report(state)
 
 # from match_engine import simulate
 # from team import Team
