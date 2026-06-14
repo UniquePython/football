@@ -36,8 +36,8 @@ class MatchState:
     away_red_carded: list[Player] = field(default_factory=list)
 
     # subs remaining
-    home_subs_remaining: int = 3
-    away_subs_remaining: int = 3
+    home_subs_remaining: int = 5
+    away_subs_remaining: int = 5
 
     # stats
     home_shots: int = 0
