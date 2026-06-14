@@ -41,7 +41,7 @@ class Formation:
 # 3-4-3
 F_3_4_3 = Formation(
     [
-        [Position.LB, Position.CB, Position.RB],
+        [Position.CB, Position.CB, Position.CB],
         [Position.LM, Position.CM, Position.CM, Position.RM],
         [Position.LW, Position.ST, Position.RW],
     ]
@@ -50,7 +50,7 @@ F_3_4_3 = Formation(
 # 3-5-2
 F_3_5_2 = Formation(
     [
-        [Position.LB, Position.CB, Position.RB],
+        [Position.CB, Position.CB, Position.CB],
         [Position.CDM, Position.LM, Position.CM, Position.RM, Position.CAM],
         [Position.ST, Position.ST],
     ]
@@ -59,7 +59,7 @@ F_3_5_2 = Formation(
 # 3-4-2-1
 F_3_4_2_1 = Formation(
     [
-        [Position.LB, Position.CB, Position.RB],
+        [Position.CB, Position.CB, Position.CB],
         [Position.CDM, Position.CM, Position.CM, Position.CDM],
         [Position.CAM, Position.CAM],
         [Position.ST],
@@ -69,7 +69,7 @@ F_3_4_2_1 = Formation(
 # 3-3-3-1
 F_3_3_3_1 = Formation(
     [
-        [Position.LB, Position.CB, Position.RB],
+        [Position.CB, Position.CB, Position.CB],
         [Position.CDM, Position.CM, Position.CDM],
         [Position.CAM, Position.CAM, Position.CAM],
         [Position.ST],
@@ -79,7 +79,7 @@ F_3_3_3_1 = Formation(
 # 3-2-4-1
 F_3_2_4_1 = Formation(
     [
-        [Position.LB, Position.CB, Position.RB],
+        [Position.CB, Position.CB, Position.CB],
         [Position.CDM, Position.CDM],
         [Position.LW, Position.CAM, Position.CAM, Position.RW],
         [Position.ST],
