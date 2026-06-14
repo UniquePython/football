@@ -809,8 +809,20 @@ def _simulate_minute(state: MatchState) -> list[MatchEvent]:
         # saved — corner or throw
         handling = gk.attributes.keeping.handling.current if gk else 50
         is_caught = _weighted_choice(handling * 0.5 / 100)
+
+        save_str = "Save" if is_caught else "Save — parried to corner"
+        events.append(
+            MatchEvent(
+                minute=minute,
+                type=EventType.Save,
+                team=defending_team,
+                primary_player=gk,
+                secondary_player=attacker,
+                description=f"{minute}' {save_str} — {gk.name.fullName} ({defending_team.name})",
+            )
+        )
+
         if not is_caught:
-            set_piece = EventType.Corner
             if home_has_possession:
                 state.home_corners += 1
             else:
@@ -824,18 +836,6 @@ def _simulate_minute(state: MatchState) -> list[MatchEvent]:
                     description=f"{minute}' Corner ({attacking_team.name})",
                 )
             )
-
-        save_str = "Save" if is_caught else "Save — parried to corner"
-        events.append(
-            MatchEvent(
-                minute=minute,
-                type=EventType.Save,
-                team=defending_team,
-                primary_player=gk,
-                secondary_player=attacker,
-                description=f"{minute}' {save_str} — {gk.name.fullName} ({defending_team.name})",
-            )
-        )
 
     return events
 
