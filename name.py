@@ -11,6 +11,14 @@ LOCALE_MAP = {
     Country.Portugal: "pt_PT",
 }
 
+_FAKER_CACHE: dict[str, Faker] = {}
+
+
+def _get_faker(locale: str) -> Faker:
+    if locale not in _FAKER_CACHE:
+        _FAKER_CACHE[locale] = Faker(locale)
+    return _FAKER_CACHE[locale]
+
 
 class Name:
     def __init__(self):
@@ -19,7 +27,7 @@ class Name:
 
     @classmethod
     def generate(cls, country: Country) -> "Name":
-        fake = Faker(LOCALE_MAP[country])
+        fake = _get_faker(LOCALE_MAP[country])
         obj = cls()
         obj._firstName = fake.first_name_male()
         obj._lastName = fake.last_name()
